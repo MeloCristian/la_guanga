@@ -27,23 +27,46 @@
                         <i class="fa-solid fa-trash"></i>
                         Eliminar
                     </button>
-                    <input type="text" name="name" id="name" hidden value="{{$articulo->nombre}}">
+                    <input type="text" name="name" id="name" hidden value="{{ $articulo->nombre }}">
                 </form>
             @else
-                <form form method="POST" class="me-2" action="{{ url('cart/' . $articulo->id) }}">
-                    {{ csrf_field() }}
-                    {{ method_field('POST') }}
-                    <button class="btn btn-outline-warning" type="submit">
-                        <i class="fa-solid fa-store"></i>
-                        Agregar al carrito
-                    </button>
-                </form>
-                <form method="GET" action="{{url('catalog')}}">
-                    <button class="btn btn-outline-success">
-                        <i class="fa-solid fa-arrow-left-long"></i>
-                        Regresar
-                    </button>
-                </form>
+                <div class="container">
+                    <div class="d-inline-flex">
+                        <a class="btn btn-outline-warning me-2" href="#collapse-cantidad" data-bs-toggle="collapse"
+                            aria-expanded="true" aria-controls="collapseExample">
+                            <i class="fa-solid fa-store"></i>
+                            Agregar al carrito
+                        </a>
+
+                        <form method="GET" action="{{ url('catalog') }}">
+                            <button class="btn btn-outline-success">
+                                <i class="fa-solid fa-arrow-left-long"></i>
+                                Regresar
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form form method="POST" class="me-2" action="{{ url('cart/' . $articulo->id) }}">
+                            {{ csrf_field() }}
+                            {{ method_field('POST') }}
+
+                            <div class="collapse" id="collapse-cantidad" style="width: 20rem">
+                                <div class="d-inline-flex mt-3">
+                                    <div class="input-group me-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Cantidad</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-describedby="basic-addon1"
+                                            name="cantidad" id="cantidad">
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-success">Agregar</button>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
             @endif
         </div>
     </div>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use Exception;
 use Illuminate\Http\Request;
+use Prophecy\Call\Call;
 
 class CategoriaController extends Controller
 {
@@ -52,5 +54,18 @@ class CategoriaController extends Controller
     public function getIndex(){
         $categorias = Categoria::all();
         return view('categoria.index',array('categorias'=> $categorias));
+    }
+
+    public function delete($id){
+        try {
+            $categoria = Categoria::findOrfail($id);
+            $categoria->delete();
+            notify()->success('La categoria fue eliminada');
+            return back();            
+        } catch (Exception $e) {
+            notify()->error('No fue posible eliminar la categoria, tenga en cuenta que si hay productos asociados a esta no se puede eliminar');
+            return back();
+        }
+        
     }
 }

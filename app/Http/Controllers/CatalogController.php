@@ -103,14 +103,14 @@ class CatalogController extends Controller
         return view('catalog.create', array('categorias' => $categorias));
     }
 
-    public function addItemStore($id)
+    public function addItemStore(Request $req)
     {
-        $articulo = Articulo::findOrFail($id);
+        $articulo = Articulo::findOrFail($req->id);
         \Cart::add(array(
-            'id' => $id,
+            'id' => $req->id,
             'name' => $articulo->nombre,
             'price' => $articulo->precio,
-            'quantity' => $articulo->existencias,
+            'quantity' => $req->cantidad,
             'associatedModel' => $articulo
         ));
         notify()->success('Articulo agregado al carrito');

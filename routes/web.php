@@ -15,21 +15,26 @@ Route::get('home', function () {
     return view('principal.home');
 });
 
+Route::get('about', function () {
+    return view('principal.about');
+});
+
 Route::get('userInfo', [HomeController::class, 'getUserInfo'])->middleware('auth');
 Route::get('catalog', [CatalogController::class, 'getIndex']);
 Route::get('catalog/categoria/{id}', [CatalogController::class, 'getIndexByCategoria']);
 Route::get('catalog/show/{id}', [CatalogController::class, 'getShow']);
-Route::put('catalog/edit/{id}', [CatalogController::class, 'putEdit']);
-Route::get('catalog/edit/{id}', [CatalogController::class, 'getEdit']);
-Route::post('catalog/create', [CatalogController::class, 'postCreate']);
-Route::delete('catalog/delete/{id}', [CatalogController::class, 'delete']);
-Route::get('catalog/create', [CatalogController::class, 'getCreate']);
+Route::put('catalog/edit/{id}', [CatalogController::class, 'putEdit'])->middleware('auth');
+Route::get('catalog/edit/{id}', [CatalogController::class, 'getEdit'])->middleware('auth');
+Route::post('catalog/create', [CatalogController::class, 'postCreate'])->middleware('auth');
+Route::delete('catalog/delete/{id}', [CatalogController::class, 'delete'])->middleware('auth');
+Route::get('catalog/create', [CatalogController::class, 'getCreate'])->middleware('auth');
 
-Route::post('categoria/create', [CategoriaController::class, 'postCreate']);
-Route::get('categoria/create', [CategoriaController::class, 'getCreate']);
-Route::get('categoria', [CategoriaController::class, 'getIndex']);
-Route::get('categoria/edit/{id}', [CategoriaController::class, 'getEdit']);
-Route::put('categoria/edit/{id}', [CategoriaController::class, 'putEdit']);
+Route::post('categoria/create', [CategoriaController::class, 'postCreate'])->middleware('auth');
+Route::get('categoria/create', [CategoriaController::class, 'getCreate'])->middleware('auth');
+Route::get('categoria', [CategoriaController::class, 'getIndex'])->middleware('auth');
+Route::get('categoria/edit/{id}', [CategoriaController::class, 'getEdit'])->middleware('auth');
+Route::put('categoria/edit/{id}', [CategoriaController::class, 'putEdit'])->middleware('auth');
+Route::delete('categoria/delete/{id}', [CategoriaController::class, 'delete'])->middleware('auth');
 
 Route::post('cart/{id}', [CatalogController::class, 'addItemStore']);
 Route::delete('cart/{id}', [CatalogController::class, 'removeItemCart']);
@@ -42,14 +47,4 @@ Route::post('factura/create', [FacturaController::class, 'postCreate']);
 Route::get('persona/{id}', [PersonaController::class, 'getPerson']);
 Route::post('persona/create', [PersonaController::class, 'postCreate']);
 
-
-
-
-Route::get('/welcome', function () {
-    return view('principal.welcome');
-});
-
-Route::get('/pagos', function () {
-    return view('pagos.show');
-});
 Auth::routes();
