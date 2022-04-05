@@ -2,13 +2,17 @@
 use Illuminate\Support\Facades\Route;
 $categorias = \App\Models\Categoria::all();
 ?>
-<header class="header d-flex justify-content-end" id="header">
+<header class="header d-flex justify-content-end bg-warning" id="header">
 
     @if (Auth::check())
         <button class="d-flex align-items-center btn btn-dark">
             <i class="fa-solid fa-user fa-lg pe-2"></i>
             <span>{{ Auth::user()->name }}</span>
         </button>
+    @else
+        <a class="d-flex align-items-center btn btn-dark" href="{{url('cart')}}">
+            <i class="fa-solid fa-cart-shopping fa-lg"></i>
+        </a>
     @endif
     @if (preg_match("/^catalog$/", request()->route()->uri) || preg_match("/^catalog\/categoria\/{id}$/", request()->route()->uri))
         <div class="dropdown">
@@ -54,7 +58,8 @@ $categorias = \App\Models\Categoria::all();
                 </li>
                 @if (Auth::check())
                     <li class="mb-1">
-                        <a class="nav_link active" data-bs-toggle="collapse" href="#categoria-collapse" aria-expanded="true">
+                        <a class="nav_link active" data-bs-toggle="collapse" href="#categoria-collapse"
+                            aria-expanded="true">
                             <i class="fa-solid fa-list"></i>
                             <span class="nav_name">Categorías</span>
                         </a>

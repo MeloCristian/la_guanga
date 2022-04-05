@@ -16,13 +16,14 @@
                             Editar
                         </button>
                     </form>
-                    <form action="{{ url('/categoria/delete/' . $categoria->id) }}" method="POST" class="m-2">
+                    <form action="{{ url('/categoria/delete/' . $categoria->id) }}" method="POST" class="m-2" id="form_delete">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
-                        <button class="btn btn-outline-danger ps-2 pe-2" type="submit">
+                        <button class="btn btn-outline-danger ps-2 pe-2 show_confirm" type="submit">
                             <i class="fa-solid fa-trash me-2"></i>
                             Eliminar
                         </button>
+                        <input value="{{$categoria->nombre}}" name="name" hidden>
                     </form>
                 </div>
             </div>

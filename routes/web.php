@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PersonaController;
 use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('principal.home');
@@ -28,6 +30,18 @@ Route::get('categoria/create', [CategoriaController::class, 'getCreate']);
 Route::get('categoria', [CategoriaController::class, 'getIndex']);
 Route::get('categoria/edit/{id}', [CategoriaController::class, 'getEdit']);
 Route::put('categoria/edit/{id}', [CategoriaController::class, 'putEdit']);
+
+Route::post('cart/{id}', [CatalogController::class, 'addItemStore']);
+Route::delete('cart/{id}', [CatalogController::class, 'removeItemCart']);
+Route::get('cart', [CatalogController::class, 'getCart']);
+
+Route::post('factura/pdf', [FacturaController::class, 'createPdf']);
+Route::get('factura/pagar', [FacturaController::class, 'getForm']);
+Route::post('factura/create', [FacturaController::class, 'postCreate']);
+
+Route::get('persona/{id}', [PersonaController::class, 'getPerson']);
+Route::post('persona/create', [PersonaController::class, 'postCreate']);
+
 
 
 

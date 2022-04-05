@@ -18,10 +18,7 @@ class CrearPersona extends Migration
             $table->string('dni')->unique();
             $table->string('nombres');
             $table->string('apellidos');
-            $table->string('direccion');
-            $table->string('email')->unique();
             $table->string('telefono');
-            $table->date('fecha_nacimiento');
             $table->timestamps();
         });
     }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Cart;
+use Illuminate\Support\Facades\Auth;
 
 class CatalogController extends Controller
 {
@@ -14,8 +16,9 @@ class CatalogController extends Controller
         return view('catalog.index', array('articulos' => $articulos));
     }
 
-    public function getIndexByCategoria($id){
-        $articulos = Articulo::all()->where('id_categoria','=',$id);
+    public function getIndexByCategoria($id)
+    {
+        $articulos = Articulo::all()->where('id_categoria', '=', $id);
         return view('catalog.index', array('articulos' => $articulos));
     }
 
@@ -98,5 +101,31 @@ class CatalogController extends Controller
     {
         $categorias = Categoria::all();
         return view('catalog.create', array('categorias' => $categorias));
+    }
+
+    public function addItemStore($id)
+    {
+        $articulo = Articulo::findOrFail($id);
+        \Cart::add(array(
+            'id' => $id,
+            'name' => $articulo->nombre,
+            'price' => $articulo->precio,
+            'quantity' => $articulo->existencias,
+            'associatedModel' => $articulo
+        ));
+        notify()->success('Articulo agregado al carrito');
+        return back();
+    }
+
+    public function removeItemCart($cart)
+    {
+        \Cart::remove($cart);
+        return back();
+    }
+
+    public function getCart()
+    {
+        $articulos =  \Cart::getContent();
+        return view('cart.index', array('articulos' => $articulos));
     }
 }

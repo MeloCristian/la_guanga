@@ -1,5 +1,4 @@
 @extends('layouts.master')
-
 @section('content')
     <div class="card mx-auto " style="max-width: 50rem">
         <div class="card-header d-flex justify-content-center">
@@ -10,7 +9,7 @@
         </div>
         <div class="row">
             <p><b>Descrpción:</b> {{ $articulo->descripcion }}</p>
-            <p><b>Cantidad:</b> {{ $articulo->existencias }} unidades.</p>
+            <p><b>Disponibles:</b> {{ $articulo->existencias }} unidades.</p>
             <p><b>Precio: </b> {{ $articulo->precio }}</p>
         </div>
         <div class="card-footer bg-dark d-inline-flex">
@@ -21,22 +20,25 @@
                         Editar
                     </button>
                 </form>
-                <form action="{{ url('/catalog/delete/'. $articulo->id) }}" method="POST">
+                <form action="{{ url('/catalog/delete/' . $articulo->id) }}" method="POST" id="form_delete">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
-                    <button class="btn btn-outline-success">
+                    <button class="btn btn-outline-success show_confirm">
                         <i class="fa-solid fa-trash"></i>
                         Eliminar
                     </button>
+                    <input type="text" name="name" id="name" hidden value="{{$articulo->nombre}}">
                 </form>
             @else
-                <form action="{{ url('/catalog/edit/' . $articulo->id) }}" class="me-2">
-                    <button class="btn btn-outline-warning">
+                <form form method="POST" class="me-2" action="{{ url('cart/' . $articulo->id) }}">
+                    {{ csrf_field() }}
+                    {{ method_field('POST') }}
+                    <button class="btn btn-outline-warning" type="submit">
                         <i class="fa-solid fa-store"></i>
-                        Pasar a la compra
+                        Agregar al carrito
                     </button>
                 </form>
-                <form action="{{ url('/catalog') }}">
+                <form method="GET" action="{{url('catalog')}}">
                     <button class="btn btn-outline-success">
                         <i class="fa-solid fa-arrow-left-long"></i>
                         Regresar
