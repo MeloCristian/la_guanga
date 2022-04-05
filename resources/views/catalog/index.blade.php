@@ -2,7 +2,7 @@
 @section('content')
     <div class="text-center" style="padding-bottom: 5rem">
         @foreach ($articulos as $key => $articulo)
-            @if ($articulo->existencias > 0)
+            @if ($articulo->existencias > 0 || Auth::check())
                 <div class="card d-inline-flex align-items-start ms-5 me-5">
                     <div class="col">
                         <div class="card" style="width: 18rem;">
